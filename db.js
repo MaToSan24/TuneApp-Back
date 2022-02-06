@@ -1,6 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-var User = require("./src/models/user");
+var User = require("./models/user");
 
 const DB_URL = process.env.MONGO_URL
 
@@ -16,7 +16,7 @@ const dbConnect = function () {
 
 // var testUser = new User({
 //     _id: new mongoose.Types.ObjectId(),
-//     email: "test@test.com",
+//     username: "test@test.com",
 //     password: "1234",
 //     role: "USER"
 // });
@@ -30,7 +30,7 @@ const dbConnect = function () {
 
 // var adminUser = new User({
 //   _id: new mongoose.Types.ObjectId(),
-//   email: "admin@admin.com",
+//   username: "admin@admin.com",
 //   password: "admin",
 //   role: "ADMIN"
 // });

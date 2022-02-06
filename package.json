@@ -19,15 +19,13 @@
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2",
-    "mongoose-unique-validator": "^3.0.0",
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^6.1.0",
-    "prismjs": "1.9.0",
-    "yup": "^0.32.11"
+    "connect-mongo": "^4.6.0",
+    "express-basic-auth": "^1.2.1",
+    "js-yaml": "^3.3.0"
   },
-  "devDependencies": {},
   "browserslist": [
     "> 1%",
     "last 2 versions",
