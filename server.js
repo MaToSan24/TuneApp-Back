@@ -24,7 +24,7 @@ app.use(
       secret: "very secret this is",
       resave: false,
       saveUninitialized: true,
-      store: MongoStore.create({ mongoUrl: process.env.MONGO_URL || "mongodb://localhost/wecaremed" })
+      store: MongoStore.create({ mongoUrl: process.env.MONGO_URL || "mongodb://localhost/tuneapp" })
   })
 );
 
