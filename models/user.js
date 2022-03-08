@@ -9,7 +9,18 @@ const userSchema = mongoose.Schema({
         unique: true
     },
     password: String,
-    isAdmin: Boolean
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
+    perfectPitchScore: {
+        type: Number,
+        default: 0,
+    },
+    rebuildTheSongScore: {
+        type: Number,
+        default: 0,
+    }
 });
 
 const User = mongoose.model('User', userSchema);
