@@ -13,6 +13,10 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    isTestUser: {
+        type: Boolean,
+        default: false,
+    },
     perfectPitchScore: {
         type: Number,
         default: 0,

@@ -6,7 +6,7 @@ const User = require('../models/user');
 
 router.get('/', async(req, res) => {
     try {
-        const userDB = await User.find({isAdmin: false}).select("-_id username perfectPitchScore rebuildTheSongScore");
+        const userDB = await User.find({isAdmin: false, isTestUser: false}).select("-_id username perfectPitchScore rebuildTheSongScore");
         res.json(userDB);
     } catch (error) {
         return res.status(400).json({
@@ -88,19 +88,17 @@ router.put('/updateScore/:id', async(req, res) => {
     }
 });
 
-// router.delete('/:id', async(req, res) => {
-//     const _id = req.params.id;
-    
-//     try {
-//         const userDB = await User.findByIdAndDelete(_id);
-//         res.status(200).json(userDB);
-//     } catch (error) {
-//         return res.status(500).json({
-//             mensaje: 'An error has occurred',
-//             error
-//         })
-//     }
-// });
+router.delete('/test', async(req, res) => {
+    try {
+        const userDB = await User.findOneAndDelete({isTestUser: true});
+        res.status(200).json(userDB);
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'An error has occurred',
+            error
+        })
+    }
+});
 
 
 module.exports = router;
