@@ -42,4 +42,14 @@ const dbConnect = function () {
 // console.log(adminUser)
 // });
 
+// User.find().then(response => {
+//   for (user of response) {
+//     if (!user.isTestUser) {
+//       user.isTestUser = false
+//       user.save()
+//       console.log("User: ", user)
+//     }
+//   }
+// })
+
 module.exports = dbConnect;
