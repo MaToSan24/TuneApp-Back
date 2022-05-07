@@ -3,6 +3,7 @@ const songSchema = mongoose.Schema({
 
     _id: mongoose.Schema.Types.ObjectId,
     name: String,
+    solutionAudioFileName: String,
     difficulty: {
         type: Number,
         min: 1,
@@ -16,7 +17,7 @@ const songSchema = mongoose.Schema({
     musicSheet: {
         type: String,
         required: true,
-    }
+    },
 });
 
 const Song = mongoose.model('Song', songSchema);

@@ -2,6 +2,7 @@ const axios = require('axios');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
+const fs = require('fs');
 
 const Song = require('../models/song');
 const User = require('../models/user');
@@ -13,12 +14,14 @@ router.get('/', async(req, res) => {
         if (user.isAdmin === true) {
             songsDB = await Song.find()
         } else {
-            songsDB = await Song.find().select("name difficulty")
+            songsDB = await Song.find()
+            for (let song of songsDB)
+                song.musicSheet = song.musicSheet.split("\n").slice(0,6).join("\n") + "\n"
         }
         res.json(songsDB);
     } catch (error) {
         return res.status(400).json({
-            mensaje: 'An error has occurred',
+            mensaje: 'An error has occurred, you are probably not logged in!',
             error
         })
     }
@@ -29,17 +32,16 @@ const _id = req.params.id;
     try {
         let songDB = null;
         let user = await User.findById(req.query.userId)
-        console.log("User id: ", req.query.userId)
-        console.log("User: ", user)
         if (user.isAdmin === true) {
             songDB = await Song.findOne({_id})
         } else {
-            songDB = await Song.findOne({_id}).select("name difficulty")
+            songDB = await Song.findById(_id)
+            songDB.musicSheet = songDB.musicSheet.split("\n").slice(0,6).join("\n") + "\n"
         }
         res.json(songDB);
     } catch (error) {
         return res.status(400).json({
-        mensaje: 'An error has occurred',
+        mensaje: 'An error has occurred, you are probably not logged in!',
         error
         })
     }
@@ -78,7 +80,7 @@ router.post('/', async(req, res) => {
         }
     } catch (error) {
         return res.status(500).json({
-            mensaje: 'An error has occurred',
+            mensaje: 'An error has occurred, you are probably not logged in!',
             error
         })
     }
@@ -122,7 +124,7 @@ router.put('/:id', async(req, res) => {
     } catch (error) {
         console.log("Error: ", error)
         return res.status(500).json({
-            mensaje: 'An error has occurred',
+            mensaje: 'An error has occurred, you are probably not logged in!',
             error
         })
     }
@@ -159,14 +161,14 @@ router.delete('/:id', async(req, res) => {
         let user = await User.findById(req.query.userId)
 
         if (user.isAdmin === true) {
-            const songDB = await Song.findOneAndDelete(req.params.id);
+            const songDB = await Song.findByIdAndDelete(req.params.id);
             res.status(200).json(songDB);
         } else {
             res.status(403).json("You don't have permission to perform this operation")
         }
     } catch (error) {
         return res.status(500).json({
-            mensaje: 'An error has occurred',
+            mensaje: 'An error has occurred, you are probably not logged in!',
             error
         })
     }
