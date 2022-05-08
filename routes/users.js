@@ -16,6 +16,20 @@ router.get('/', async(req, res) => {
     }
 });
 
+router.get('/isAdmin', async(req, res) => {
+    try {
+        let userId = req.query.userId;
+        let user = await User.findById(userId)
+        res.json(user.isAdmin);
+    } catch (error) {
+        console.log("Error: ", error)
+        return res.status(400).json({
+            mensaje: 'An error has occurred',
+            error
+        })
+    }
+});
+
 // router.get('/:id', async(req, res) => {
 // const _id = req.params.id;
 //     try {
