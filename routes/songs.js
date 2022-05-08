@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
 const fs = require('fs');
+var stringSimilarity = require("string-similarity");
 
 const Song = require('../models/song');
 const User = require('../models/user');
@@ -78,6 +79,27 @@ router.post('/', async(req, res) => {
                 res.status(200).json(songDB); 
             }
         }
+    } catch (error) {
+        return res.status(500).json({
+            mensaje: 'An error has occurred, you are probably not logged in!',
+            error
+        })
+    }
+});
+
+router.post('/checkResult', async(req, res) => {
+    try {
+        console.log("Checking 'rebuild the song' result: ")
+        let user = await User.findById(req.body.userId)
+        let song = await Song.findById(req.body.song._id)
+        let userAttempt = req.body.userAttempt
+
+        let similarity = stringSimilarity.compareTwoStrings(song.musicSheet, userAttempt)
+
+        user.rebuildTheSongScore.set(song.name, Math.round(similarity * song.difficulty * 50 + Number.EPSILON))
+        console.log("User: ", user)
+        user.save()
+        res.status(200).json(similarity)
     } catch (error) {
         return res.status(500).json({
             mensaje: 'An error has occurred, you are probably not logged in!',

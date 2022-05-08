@@ -22,8 +22,9 @@ const userSchema = mongoose.Schema({
         default: 0,
     },
     rebuildTheSongScore: {
-        type: Number,
-        default: 0,
+        type: Map,
+        of: Number,
+        default: {},
     }
 });
 
